@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>SRCE - Chatbot</title>
+<style>
+#reponses {
+	background-color: #666;
+	color: white;
+	font-family: Baskerville, "Palatino Linotype", Palatino, "Century Schoolbook L", "Times New Roman", "serif";
+	font-size: 14px;
+	width: 500px;
+	height: 500px;
+}
+</style>
+<script>
+function chat() {
+	console.log("chat!");
+	requete = document.getElementById('requete').value;
+	console.log("requête = " + requete);
+	
+	// Requête en POST
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", 'https://api.openbook.botpress.cloud/v1/artifacts/61c2ad02f49edaa6.9d449cc50c01645d/query', true);
+
+	//Envoie les informations du header adaptées avec la requête
+	/*xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");*/
+	xhr.setRequestHeader("Content-Type", "application/json");
+	
+	xhr.setRequestHeader("Authorization", "Bearer FDo6j5tc_XXHdheN9e8DlDMssr9WpoxXJFeEfJLLajQ.dcE6oWHqJtdl25VAJdgLIat7PfJCz6AjhiXMUn6DwFc");
+
+	xhr.onreadystatechange = function() { //Appelle une fonction au changement d'état.
+		console.log("xhr.readyState = " + xhr.readyState);
+		console.log("xhr.status = " + xhr.status);
+		/*if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {*/
+		if ( xhr.readyState == 4 && xhr.status == 200) {
+			// Requête finie, traitement ici.
+			//console.log('it works !!!');
+			console.log("resultat = " + xhr.responseText);
+			// Changer infos du modal
+		}
+		console.log("resultat2 = " + xhr.responseText);
+		console.log("resultat3 = " + xhr.response);
+		console.log("resultat4 = " + this.response);
+	}
+	// Error Handling:
+	xhr.onerror = function(error){
+		console.error("error = " + error );
+	}
+	
+	xhr.send(JSON.stringify({"query": "quand a lieu l'événement","history": ["string"],"answer_level": "strict"}));
+	console.log("resultat = " + xhr.responseText);
+		
+}
+</script>
+</head>
+
+<body>
+	<div id="reponses">SRCE - à vot'service<br></div>
+	<form id="chatform" onSubmit="chat();">
+		<input type="text" id="requete">
+		<button type="submit" value="OK"></button>
+	</form>
+</body>
+</html>
